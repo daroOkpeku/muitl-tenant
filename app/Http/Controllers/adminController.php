@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use App\Models\Blog;
+use App\Models\Tenant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Gate;
@@ -93,4 +95,76 @@ class adminController extends Controller
         }
       }
 
+
+      public function create_blog(Request $request){
+        return view('create_blog');
+      }
+     
+      public function create_blog_send(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string',
+            'snippet' => 'required|string',
+            'body' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+        if (Gate::allows("check-user", auth()->user())) {
+        $tenant = Tenant::where('domain', $request->root())->firstOrFail();
+        Blog::create([
+            'title'=>$request->title,
+            'heading'=>$request->snippet,
+            'body'=>$request->body,
+            'user_id'=>auth()->user()->id,
+            'tenant_id'=>$tenant->id,
+        ]);
+        return redirect()->intended(route('create_blog'));
+      }else{
+        return back()->with('error', 'You do not have access.');
+      }
+      }
+
+      public function list(Request $request){
+         $blog = Blog::paginate(10);
+        return view('list', ['blogs'=>$blog]);
+      }
+
+      public function del_list(Request $request){
+        $blog = Blog::find(intval($request->get('id')));
+        if($blog){
+            $blog->delete();
+            return redirect()->intended(route('list'));  
+        }
+      }
+
+      public function edit_blog(Request $request, $id){
+        $blog = Blog::find(intval($id));
+        if($blog){
+        return view('edit_blog', ['blog'=>$blog, 'id'=>$id]);
+        }
+      }
+
+
+      public function create_blog_edit(Request $request, $id){
+        
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string',
+            'snippet' => 'required|string',
+            'body' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+        $blog = Blog::find(intval($id));
+        if($blog){
+            $blog->title = $request->title;
+            $blog->heading = $request->snippet;
+            $blog->body = $request->body;
+            $blog->save();
+            return redirect()->intended(route('list'));  
+        }
+      }
 }

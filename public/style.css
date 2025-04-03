@@ -168,3 +168,25 @@
     .searchbar button{
       width:100%;
     }
+
+    .icons_del{
+      flex-direction: row;
+      align-items: center;
+      gap: 2px;
+      padding: 0.2rem;
+      margin-top: 10px;
+    }
+
+    .btn_del{
+      background-color: red;
+      color: white;
+      outline: none;
+      border:none ;
+    }
+
+    .btn_edit{
+      background-color:green;
+      color: white; 
+      outline: none;
+      border:none ;
+    }
