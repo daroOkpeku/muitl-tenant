@@ -22,4 +22,7 @@ Route::middleware('admin_tenant')->group(function () {
 Route::get('/', [adminController::class, 'login_view']);
 Route::post('/login', [adminController::class, 'login'])->name('login');
 Route::get("/dashboard", [adminController::class, 'dashboard'])->name('dashboard');
+// approve
+Route::get("/approve", [adminController::class, 'approve'])->name('approve');
+
 });

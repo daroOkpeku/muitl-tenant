@@ -3,7 +3,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-6/iCBmLmgmEsn0mYSsTH4kJK6xtpzawVxCfaOj04Nsukkzvk3ccG6AS2oC1pilRFNtvzYZvv9mXVc49SuQi1dA==" crossorigin="anonymous" referrerpolicy="no-referrer" />    
     @include('layout.head') 
    
-
+{{--     <a href="{{ url('api/v1/reportall') . '?' . http_build_query(['reportType' =>request()->get('reportType'), 'userid' => $user->id,  'period'=>request()->get('period'), 'type'=>request()->get('type'), 'country_name'=>request()->get('country_name')]) }}"
+        > --}}
 <body>
 <div >
      @include('layout.nav')
@@ -33,6 +34,7 @@
                 <th>Name</th>
                 <th>email</th>
                 <th>user type</th>
+                <th>Approve status</th>
                 <th>action</th>
              </thead>
 
@@ -47,11 +49,24 @@
                     User     
                     @endif
                 </td>
-               
                 <td>
-                    <button class="approve" style="background:green;  align-items: center;  justify-items: center;" >
-                       Approve
-                    </button>
+                    @if ($user->is_approve == 1)
+                    Approve
+                  @else
+                  Disapprove     
+                  @endif
+                </td>
+                <td>
+                    @if ($user->is_approve == 1)
+                    <a href="{{ url('approve') . '?' . http_build_query(['is_approve' =>0, 'id' => $user->id ]) }} ">   <button class="approve" style="background:red;  align-items: center;  justify-items: center;" >
+                     Disapprove
+                  </button></a>
+                  @else
+                  <a href="{{ url('approve') . '?' . http_build_query(['is_approve' =>1, 'id' => $user->id ]) }} ">   <button class="approve" style="background:green;  align-items: center;  justify-items: center;" >
+                    Approve
+                 </button></a>
+                    @endif
+                   
                 </td>  
                 @endforeach
                

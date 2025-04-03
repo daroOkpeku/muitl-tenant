@@ -76,9 +76,21 @@ class adminController extends Controller
     }
 
 
-    public function approve(){
+    public function approve(Request $request){
+        if (Gate::allows("check-user", auth()->user())) {
+            $user = User::find(intval($request->get('id')));
         
-
-    }
+            if ($user) {
+                $user->update([
+                    'is_approve' => intval($request->get('is_approve'))
+                ]);
+                return redirect()->intended(route('dashboard'));
+            } else {
+                return back()->with('error', 'User not found.');
+            }
+        } else {
+            return back()->with('error', 'You do not have access.');
+        }
+      }
 
 }
