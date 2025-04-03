@@ -5,7 +5,7 @@
     </div>
     @if (auth()->check())
     <ul>
-        <li><a href="/first">Blog</a></li>
+        <li><a href="{{ route('dashboard') }}">dashboard</a></li>
         <li><a href="{{ route('list') }}">All Blogs</a></li>
         <li><a href="{{ route('create_blog') }}">New Blog</a></li>
     </ul>

@@ -71,6 +71,7 @@ class adminController extends Controller
         }
         
         $users = $users->paginate(10)->appends($request->query());
+        // dd(json_encode($users));
         return view('dashboard', ['users' => $users]);
     }else{
         return redirect()->intended(route('login'));  
@@ -127,7 +128,7 @@ class adminController extends Controller
       }
 
       public function list(Request $request){
-         $blog = Blog::paginate(10);
+         $blog = Blog::paginate(10)->appends($request->query());
         return view('list', ['blogs'=>$blog]);
       }
 

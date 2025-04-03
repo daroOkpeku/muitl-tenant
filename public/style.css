@@ -129,6 +129,11 @@
       text-align: center;
     }
 
+    .table-cover table tbody{
+    flex-direction: column;
+    
+    }
+
     .table-cover table td{
       padding: 0.5rem;
       text-transform: capitalize;

@@ -30,16 +30,18 @@
         <div class="table-cover">
             <table>
              <thead>
-               
+               <tr>
                 <th>Name</th>
                 <th>email</th>
                 <th>user type</th>
                 <th>Approve status</th>
                 <th>action</th>
+               </tr>
              </thead>
 
              <tbody>
                 @foreach ($users as $user)
+                <tr>
                 <td>{{$user->name}}</td>
                 <td>{{$user->email}}</td>
                 <td>
@@ -68,6 +70,7 @@
                     @endif
                    
                 </td>  
+                </tr>
                 @endforeach
                
              </tbody>

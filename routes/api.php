@@ -34,4 +34,15 @@ Route::middleware('tenant')->group(function () {
 
     Route::post('login', [UserAuthController::class, 'login']);
 
+    Route::middleware('auth:api')->group(function () {
+    Route::get('blog_list', [UserAuthController::class, 'list']);
+    });
+
 });
+
+
+Route::middleware('admin_tenant')->group(function () {
+    Route::post('create_tenant', [UserAuthController::class, 'create_tenant']);
+});
+
+

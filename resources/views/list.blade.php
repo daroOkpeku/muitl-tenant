@@ -31,6 +31,7 @@
         {{-- <h3 class="title">no data availiable</h3>  --}}
    
     </div>
+    {{ $blogs->links() }}
 
     @include('layout.footer')
 
